@@ -1,6 +1,6 @@
 # MathLibrary
 
-This is a Math Library i am creating for fun in c++. I just love c++ and do not get enough time to use it so i have decided to make a Math Library, and eventually will hope to use it to train a deep learning neural network.
+This is a Math Library i am creating for fun in c++. I just love c++ and do not get enough time to use it so i have decided to start this project, and eventually will hope to use it to train a deep learning neural network.
 
 # Running!
     Use the following command, and make sure you have g++ installed
