@@ -5,37 +5,62 @@
 
 #include "Matrix.h"
 
+/*
+ * helper methods
+ */
 // init the values in the matrix
-void Matrix::initValues() {
+void Matrix::init_values() {
     this->values = new double*[this->cols];
     for (int x = 0; x < this->cols; ++x) {
         this->values[x] = new double[this->rows];
-        this->setColValues(x, 0.0);
+        this->set_col_values(x, 0.0);
     }
 }
 
-void Matrix::zeroValues() {
+// init the values in the matrix to zero
+void Matrix::zero_values() {
     for(int x = 0; x < this->cols; ++x)
         for(int y = 0; y < this->rows; ++y)
             this->values[x][y] = 0.0;
+}
+
+// check if x if out of bounds
+void Matrix::check_x(int x) const {
+    if(x < 0 || x >= this->cols)
+        throw std::logic_error("x must be non-negative and less than the number of columns");
+}
+
+// check if y is out of bounds
+void Matrix::check_y(int y) const  {
+    if(y < 0 || y >= this->rows)
+        throw std::logic_error("y must be non-negative and less than the number of rows");
+}
+
+// check if x or y are out of bounds
+void Matrix::check_xy(int x, int y) const  {
+    if(x < 0 || x >= this->cols || y < 0 || y >= this->rows)
+        throw std::logic_error("x and y must be non negative values and less than the columns and rows");
 }
 
 /*
  * setters
  */
 // set value in matrix
-void Matrix::setValue(int x, int y, double val) {
+void Matrix::set_value(int x, int y, double val) {
+    this->check_xy(x, y);
     this->values[x][y] = val;
 }
 
 // set the values of a column to a specific value
-void Matrix::setColValues(int x, double val) {
+void Matrix::set_col_values(int x, double val) {
+    this->check_x(x);
     for(int y = 0; y < this->rows; ++y)
         this->values[x][y] = val;
 }
 
 // set the values of a row to a specific value
-void Matrix::setRowValues(int y, double val) {
+void Matrix::set_row_values(int y, double val) {
+    this->check_y(y);
     for(int x = 0; x < this->cols; ++x)
         this->values[x][y] = val;
 }
@@ -44,17 +69,18 @@ void Matrix::setRowValues(int y, double val) {
  * getters
  */
 // get the columns
-int Matrix::getCols() const {
+int Matrix::get_cols() const {
     return this->cols;
 }
 
 // get the rows
-int Matrix::getRows() const {
+int Matrix::get_rows() const {
     return this->rows;
 }
 
 // get value in matrix
-double Matrix::getValue(int x, int y) const {
+double Matrix::get_value(int x, int y) const {
+    this->check_xy(x, y);
     return this->values[x][y];
 }
 
@@ -63,7 +89,7 @@ double Matrix::getValue(int x, int y) const {
  */
 // constructor for Matrix
 Matrix::Matrix(int cols, int rows): cols(cols), rows(rows) {
-    this->initValues();
+    this->init_values();
 }
 
 // create a matrix
@@ -84,16 +110,16 @@ Matrix::~Matrix() {
     this->values = nullptr;
 }
 
-
 /*
  * operator overloading
  */
+// overload <<, output
 std::ostream & operator<<(std::ostream &os, const Matrix &m) {
-    int cols = m.getCols(), rows = m.getRows();
+    int cols = m.get_cols(), rows = m.get_rows();
     os << "columns: " << cols << ", rows: " << rows << std::endl;
     for (int y = 0; y < rows; ++y) {
         for (int x = 0; x < cols; ++x)
-            os << m.getValue(x, y);
+            os << m.get_value(x, y);
         os << std::endl;
     }
     return os;

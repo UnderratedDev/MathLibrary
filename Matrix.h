@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <stdexcept>
+
 /*
  * represents a Matrix
  */
@@ -36,9 +37,19 @@ private:
      * helper functions
      */
     // function to initialise the default values
-    void initValues();
+    void init_values();
     // function to zero the matrix
-    void zeroValues();
+    void zero_values();
+
+    /*
+     * error checks
+     */
+    // check if x is out of bounds
+    void check_x(int x) const;
+    // check if y is out of bounds
+    void check_y(int y) const;
+    // check if x or y are out of bounds
+    void check_xy(int x, int y) const;
 
 public:
     /*
@@ -57,21 +68,21 @@ public:
      * setters
      */
     // set the value in the matrix
-    void setValue(int x, int y, double val);
+    void set_value(int x, int y, double val);
     // set the values of a column to a specific value
-    void setColValues(int x, double val);
+    void set_col_values(int x, double val);
     // set the values of a row to a specific value
-    void setRowValues(int y, double val);
+    void set_row_values(int y, double val);
 
     /*
      * getters
      */
     // get columns
-    int getCols() const;
+    int get_cols() const;
     // get rows
-    int getRows() const;
+    int get_rows() const;
     // get value in matrix
-    double getValue(int x, int y) const;
+    double get_value(int x, int y) const;
 
     /*
      * operator overloading
